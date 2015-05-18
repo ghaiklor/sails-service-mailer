@@ -1,0 +1,33 @@
+{
+  "name": "sails-service-mailer",
+  "version": "0.1.0",
+  "description": "Service for Sails framework with Mailer feautres",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "mandrill-api": "^1.0.45"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "istanbul": "^0.3.14",
+    "mocha": "^2.2.5"
+  },
+  "scripts": {
+    "test": "istanbul cover _mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghaiklor/sails-service-mailer.git"
+  },
+  "keywords": [
+    "sails",
+    "service",
+    "mailer"
+  ],
+  "author": "ghaiklor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghaiklor/sails-service-mailer/issues"
+  },
+  "homepage": "https://github.com/ghaiklor/sails-service-mailer#readme"
+}
