@@ -33,10 +33,14 @@ describe('BaseMailer', function () {
 
   it('Should properly create mailer with pre-defined config', function () {
     var mailer = new BaseMailer({
+      transporter: {
+        bar: 'foo'
+      },
       foo: 'bar'
     });
 
     assert.equal(mailer.getConfig('foo'), 'bar');
+    assert.deepEqual(mailer.getConfig('transporter'), {bar: 'foo'});
     assert.notOk(mailer.getConfig('NOT_EXISTS'));
   });
 
