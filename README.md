@@ -93,6 +93,13 @@ var ses = MailerService.create('ses', {
     secretAccessKey: 'MY_SECRET'
   }
 });
+
+ses
+  .send({
+    to: 'ghaiklor@gmail.com'
+  })
+  .then(console.log.bind(console))
+  .catch(console.error.bind(console))
 ```
 
 ## License
