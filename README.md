@@ -4,6 +4,97 @@
 
 Service for Sails framework with Mailer features.
 
+## List of supported mail transports
+
+- direct (sends email directly to MX server)
+- SendGrid ([SendGrid API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html))
+- sendmail (sends email via sendmail)
+- Amazon SES (sends email via Amazon SES services)
+- SMTP (sends email via some of SMTP servers)
+- Stub (stub sending of email)
+
+## Getting Started
+
+Install this module.
+
+```shell
+npm install sails-service-mailer
+```
+
+Then require it in your service.
+
+```javascript
+// api/services/MailerService.js
+module.exports = require('sails-service-mailer');
+```
+
+That's it, you can create instances of mailer for your needs in your project.
+
+```javascript
+// api/controllers/MailController.js
+var sendmail = MailerService.create('sendmail', {
+  from: 'no-reply@my-project.com',
+  subject: 'Hello, there',
+  text: 'And of course, Hello World!',
+  transporter: {
+    path: '/usr/bin/sendmail'
+  }
+});
+
+module.exports = {
+  send: function(req, res) {
+    sendmail
+      .send({
+        to: req.param('to')
+      })
+      .then(res.ok)
+      .catch(res.serverError);
+  }
+};
+```
+
+## API
+
+Each of Mailer instances has only one method
+
+- send(config) - In config you can override pre-defined options. Returns Promise.
+
+## Examples
+
+### sendmail
+
+```javascript
+var sendmail = MailerService.create('sendmail', {
+  from: 'no-reply@my-project.com',
+  subject: 'Hello, there',
+  text: 'And of course, Hello World!',
+  transporter: {
+    path: '/usr/bin/sendmail'
+  }
+});
+
+sendmail
+  .send({
+    to: 'ghaiklor@gmail.com'
+  })
+  .then(console.log.bind(console))
+  .catch(console.error.bind(console));
+```
+
+### SES Mailer
+
+```javascript
+var ses = MailerService.create('ses', {
+  from: 'no-reply@my-project.com',
+  subject: 'Hello, there',
+  text: 'And of course, Hello World!',
+  transporter: {
+    accessKeyId: 'MY_KEY',
+    secretAccessKey: 'MY_SECRET'
+  }
+});
+```
+
 ## License
 
 The MIT License (MIT)
