@@ -53,6 +53,28 @@ module.exports = {
 };
 ```
 
+## Configuration
+
+There is two kind of configuration - transporter configuration and mail configuration.
+
+When you instantiate new instance of mailer, in configuration object you can add `transporter` object.
+This object will send directly to one of nodemailer transports.
+
+And all keys that don't belongs to `transporter` will send directly to `sendMail` function.
+
+So basic configuration can be:
+
+```javascript
+var mailer = new DirectMailer({
+  from: 'no-reply@some.com' // this will go to sendMail,
+  transporter: { // this will go to nodemailer.createTransport
+    name: 'some.mx-server.com'
+  }
+});
+```
+
+Each of available options you can find in nodemailer transport repositories.
+
 ## API
 
 Each of Mailer instances has only one method
