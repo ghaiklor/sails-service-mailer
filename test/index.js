@@ -1,5 +1,10 @@
 var assert = require('chai').assert;
 var MailerService = require('../');
+var DirectMailer = require('../lib/DirectMailer');
+var SendGridMailer = require('../lib/SendGridMailer');
+var SendMailMailer = require('../lib/SendMailMailer');
+var SESMailer = require('../lib/SESMailer');
+var SMTPMailer = require('../lib/SMTPMailer');
 var StubMailer = require('../lib/StubMailer');
 
 describe('MailerService', function () {
@@ -14,8 +19,17 @@ describe('MailerService', function () {
     assert.isFunction(MailerService.StubMailer);
   });
 
-  it('Should properly create mailer instance', function () {
+  it('Should properly create all of mailer instances', function () {
+    assert.instanceOf(MailerService.create('direct'), DirectMailer);
+    assert.instanceOf(MailerService.create('sendgrid', {transporter: {auth: {}}}), SendGridMailer);
+    assert.instanceOf(MailerService.create('sendmail'), SendMailMailer);
+    assert.instanceOf(MailerService.create('ses'), SESMailer);
+    assert.instanceOf(MailerService.create('smtp'), SMTPMailer);
     assert.instanceOf(MailerService.create('stub'), StubMailer);
+
+    assert.throw(function () {
+      MailerService.create('NOT_EXISTS');
+    }, Error);
   });
 
   it('Should properly send mail', function (done) {
