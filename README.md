@@ -73,55 +73,113 @@ var mailer = new DirectMailer({
 });
 ```
 
-Each of available options you can find in nodemailer transport repositories.
+Each of available options you can find in nodemailer transport repositories or a little bit below in examples.
+
+- Mail options you can find [here](http://www.nodemailer.com/#e-mail-message-fields).
+- Transport options you can find in appropriate repository of nodemailer transports.
 
 ## API
 
 Each of Mailer instances has only one method
 
-- send(config) - In config you can override pre-defined options. Returns Promise.
+- send(config) - In config you can override pre-defined options when you created instance. Returns Promise.
 
 ## Examples
 
-### sendmail
+All of this examples contains all the transporter configuration keys.
+And most of them is optional.
+
+### DirectMailer
+
+```javascript
+var direct = MailerService.create('direct', {
+  from: 'no-reply@ghaiklor.com',
+  transporter: {
+    name: '<MX_HOSTNAME>', // hostname to be used when introducing the client to the MX server
+    debug: false // if true, the connection emits all traffic between client and server as `log` events
+  }
+});
+```
+
+### SendGridMailer
+
+```javascript
+var sendGrid = MailerService.create('sendgrid', {
+  from: 'no-reply@ghaiklor.com',
+  transporter: {
+    auth: {
+      api_user: '<SENDGRID_USERNAME>', // SendGrid username
+      api_key: '<SENDGRID_PASSWORD>' // SendGrid password
+    }
+  }
+});
+```
+
+### SendMailMailer
 
 ```javascript
 var sendmail = MailerService.create('sendmail', {
-  from: 'no-reply@my-project.com',
-  subject: 'Hello, there',
-  text: 'And of course, Hello World!',
+  from: 'no-reply@ghaiklor.com',
   transporter: {
-    path: '/usr/bin/sendmail'
+    path: '/usr/bin/sendmail', // path to the sendmail command
+    args: [] // an array of extra command line options to pass to the `sendmail` command
   }
 });
-
-sendmail
-  .send({
-    to: 'ghaiklor@gmail.com'
-  })
-  .then(console.log.bind(console))
-  .catch(console.error.bind(console));
 ```
 
-### SES Mailer
+### SESMailer
 
 ```javascript
 var ses = MailerService.create('ses', {
-  from: 'no-reply@my-project.com',
-  subject: 'Hello, there',
-  text: 'And of course, Hello World!',
+  from: 'no-reply@ghaiklor.com',
   transporter: {
-    accessKeyId: 'MY_KEY',
-    secretAccessKey: 'MY_SECRET'
+    ses: {}, // instantiated AWS SES object with new AWS.SES()
+    accessKeyId: 'MY_KEY', // AWS access key
+    secretAccessKey: 'MY_SECRET', // AWS secret key
+    sessionToken: '', // Session token
+    region: '', // Specify the region to send the service request
+    httpOptions: {}, // A hash of options to pass to the low-level AWS HTTP request
+    rateLimit: 5 // Specify the amount of messages can be sent in 1 second
   }
 });
+```
 
-ses
-  .send({
-    to: 'ghaiklor@gmail.com'
-  })
-  .then(console.log.bind(console))
-  .catch(console.error.bind(console))
+### SMTPMailer
+
+```javascript
+var smtp = MailerService.create('smtp', {
+  from: 'no-reply@ghaiklor.com',
+  transporter: {
+    port: 25, // The port to connect to
+    host: 'localhost', // The hostname to connect to
+    secure: false, // Defines if the connection should use SSL
+    auth: { // Defines authentication data
+      user: '', // Username
+      pass: '', // Password
+      xoauth2: '' // OAuth2 access token
+    },
+    ignoreTLS: false, // Turns off STARTTLS support if true
+    name: '', // Options hostname of the client
+    localAddress: '', // Local interface to bind to for network connections
+    connectionTimeout: 2000, // How many ms to wait for the connection to establish
+    greetingTimeout: 2000, // How many ms to wait for the greeting after connection
+    socketTimeout: 2000, // How many ms of inactivity to allow
+    debug: false, // If true, the connection emits all traffic between client and server as `log` events
+    authMethod: 'PLAIN', // Defines preferred authentication method
+    tls: {} // Defines additional options to be passed to the socket constructor
+  }
+});
+```
+
+### StubMailer
+
+```javascript
+var stub = MailerService.create('stub', {
+  from: 'no-reply@ghaiklor.com',
+  transporter: {
+    error: new Error('Invalid recipient') // If you want that sending will fail and return error
+  }
+});
 ```
 
 ## License
