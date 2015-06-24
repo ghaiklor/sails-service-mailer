@@ -1,6 +1,6 @@
 {
   "name": "sails-service-mailer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Service for Sails framework with Mailer feautres",
   "main": "index.js",
   "author": "ghaiklor",
