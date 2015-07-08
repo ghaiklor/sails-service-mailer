@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+- Refactoring and cleaning up;
+- Replace extend with lodash;
+- Some memory optimisations;
+
 ## 1.1.0
 
 - Update dependencies;
