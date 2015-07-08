@@ -43,6 +43,14 @@ describe('BaseMailer', function () {
     assert.notOk(mailer.getConfig('NOT_EXISTS'));
   });
 
+  it('Should properly get/set transporter', function () {
+    var mailer = new BaseMailer();
+
+    assert.notOk(mailer.getTransporter());
+    assert.instanceOf(mailer.setTransporter('SOME_TRANSPORTER'), BaseMailer);
+    assert.equal(mailer.getTransporter(), 'SOME_TRANSPORTER');
+  });
+
   it('Should properly throw error on send', function () {
     var mailer = new BaseMailer();
     assert.throw(function () {
