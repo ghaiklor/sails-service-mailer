@@ -18,7 +18,7 @@ describe('SESMailer', function () {
       from: 'no-reply@ghaiklor.com'
     });
 
-    sinon.stub(mailer._transporter, 'sendMail', function (config, cb) {
+    sinon.stub(mailer.getTransporter(), 'sendMail', function (config, cb) {
       cb();
     });
 
@@ -27,12 +27,12 @@ describe('SESMailer', function () {
         to: 'another@mail.com'
       })
       .then(function () {
-        assert(mailer._transporter.sendMail.calledOnce);
-        assert.equal(mailer._transporter.sendMail.getCall(0).args[0].from, 'no-reply@ghaiklor.com');
-        assert.equal(mailer._transporter.sendMail.getCall(0).args[0].to, 'another@mail.com');
-        assert.isFunction(mailer._transporter.sendMail.getCall(0).args[1]);
+        assert(mailer.getTransporter().sendMail.calledOnce);
+        assert.equal(mailer.getTransporter().sendMail.getCall(0).args[0].from, 'no-reply@ghaiklor.com');
+        assert.equal(mailer.getTransporter().sendMail.getCall(0).args[0].to, 'another@mail.com');
+        assert.isFunction(mailer.getTransporter().sendMail.getCall(0).args[1]);
 
-        mailer._transporter.sendMail.restore();
+        mailer.getTransporter().sendMail.restore();
 
         done();
       })
