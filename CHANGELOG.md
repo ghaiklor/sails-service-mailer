@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- Replace all `_.assign` calls with `_.merge` for recursive merging;
+
 ## 1.2.0
 
 - Refactoring and cleaning up;
