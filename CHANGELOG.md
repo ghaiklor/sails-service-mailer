@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+- Replace `getConfig` and `setConfig` with `get` and `set` methods;
+- Optimize factory method `create`;
+- Update docs;
+
 ## 1.2.1
 
 - Replace all `_.assign` calls with `_.merge` for recursive merging;
