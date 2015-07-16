@@ -35,10 +35,7 @@ That's it, you can create instances of mailer for your needs in your project.
 var sendmail = MailerService.create('sendmail', {
   from: 'no-reply@my-project.com',
   subject: 'Hello, there',
-  text: 'And of course, Hello World!',
-  transporter: {
-    path: '/usr/bin/sendmail'
-  }
+  text: 'And of course, Hello World!'
 });
 
 module.exports = {
@@ -82,12 +79,15 @@ Each of available options you can find in nodemailer transport repositories or a
 
 Each of Mailer instances has only one method
 
-- send(config) - In config you can override pre-defined options when you created instance. Returns Promise.
+### send(config)
+
+`config` - Configuration object with mail options like `from`, `to`, etc... `config` will mix up to pre-defined config.
+
+Returns Promise.
 
 ## Examples
 
-All of this examples contains all the transporter configuration keys.
-And most of them is optional.
+All of this examples contains all the transporter configuration keys. And most of them is optional.
 
 ### DirectMailer
 
