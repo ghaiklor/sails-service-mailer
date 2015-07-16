@@ -1,5 +1,4 @@
 var assert = require('chai').assert;
-var Promise = require('bluebird');
 var sinon = require('sinon');
 var SMTPMailer = require('../lib/SMTPMailer');
 
@@ -28,8 +27,10 @@ describe('SMTPMailer', function () {
       })
       .then(function () {
         assert(mailer.getTransporter().sendMail.calledOnce);
-        assert.equal(mailer.getTransporter().sendMail.getCall(0).args[0].from, 'no-reply@ghaiklor.com');
-        assert.equal(mailer.getTransporter().sendMail.getCall(0).args[0].to, 'another@mail.com');
+        assert.deepEqual(mailer.getTransporter().sendMail.getCall(0).args[0], {
+          from: 'no-reply@ghaiklor.com',
+          to: 'another@mail.com'
+        });
         assert.isFunction(mailer.getTransporter().sendMail.getCall(0).args[1]);
 
         mailer.getTransporter().sendMail.restore();

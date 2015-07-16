@@ -1,9 +1,8 @@
 var assert = require('chai').assert;
-var Promise = require('bluebird');
 var sinon = require('sinon');
 var SendGridMailer = require('../lib/SendGridMailer');
 
-var transporterConfig = {
+var TRANSPORTER_CONFIG = {
   auth: {
     api_user: 'test',
     api_key: 'test'
@@ -16,14 +15,14 @@ describe('SendGridMailer', function () {
   });
 
   it('Should properly instantiate', function () {
-    var mailer = new SendGridMailer({transporter: transporterConfig});
+    var mailer = new SendGridMailer({transporter: TRANSPORTER_CONFIG});
     assert.instanceOf(mailer, SendGridMailer);
   });
 
   it('Should properly send mail', function (done) {
     var mailer = new SendGridMailer({
       from: 'no-reply@ghaiklor.com',
-      transporter: transporterConfig
+      transporter: TRANSPORTER_CONFIG
     });
 
     sinon.stub(mailer.getTransporter(), 'sendMail', function (config, cb) {
@@ -36,8 +35,10 @@ describe('SendGridMailer', function () {
       })
       .then(function () {
         assert(mailer.getTransporter().sendMail.calledOnce);
-        assert.equal(mailer.getTransporter().sendMail.getCall(0).args[0].from, 'no-reply@ghaiklor.com');
-        assert.equal(mailer.getTransporter().sendMail.getCall(0).args[0].to, 'another@mail.com');
+        assert.deepEqual(mailer.getTransporter().sendMail.getCall(0).args[0], {
+          from: 'no-reply@ghaiklor.com',
+          to: 'another@mail.com'
+        });
         assert.isFunction(mailer.getTransporter().sendMail.getCall(0).args[1]);
 
         mailer.getTransporter().sendMail.restore();
