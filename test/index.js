@@ -1,11 +1,11 @@
 var assert = require('chai').assert;
 var MailerService = require('../');
-var DirectMailer = require('../lib/DirectMailer');
-var SendGridMailer = require('../lib/SendGridMailer');
-var SendMailMailer = require('../lib/SendMailMailer');
-var SESMailer = require('../lib/SESMailer');
-var SMTPMailer = require('../lib/SMTPMailer');
-var StubMailer = require('../lib/StubMailer');
+var DirectMailer = MailerService.DirectMailer;
+var SendGridMailer = MailerService.SendGridMailer;
+var SendMailMailer = MailerService.SendMailMailer;
+var SESMailer = MailerService.SESMailer;
+var SMTPMailer = MailerService.SMTPMailer;
+var StubMailer = MailerService.StubMailer;
 
 describe('MailerService', function () {
   it('Should properly export', function () {
