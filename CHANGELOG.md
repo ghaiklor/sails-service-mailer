@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Improve branch coverage for all mailers;
+
 ## 2.0.0
 
 - Replace `getConfig` and `setConfig` with `get` and `set` methods;

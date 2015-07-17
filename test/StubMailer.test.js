@@ -46,4 +46,16 @@ describe('StubMailer', function () {
       })
       .catch(done);
   });
+
+  it('Should properly throw exception on send', function (done) {
+    var mailer = new StubMailer({transporter: {error: new Error('Send is unsuccessful')}});
+
+    mailer
+      .send()
+      .then(done)
+      .catch(function (error) {
+        assert.instanceOf(error, Error);
+        done();
+      });
+  });
 });

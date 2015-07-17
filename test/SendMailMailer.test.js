@@ -39,4 +39,17 @@ describe('SendMailMailer', function () {
       })
       .catch(done);
   });
+
+  it('Should properly throw exception on send', function (done) {
+    var mailer = new SendMailMailer();
+    mailer.getTransporter().transporter = 'WRONG';
+
+    mailer
+      .send()
+      .then(done)
+      .catch(function (error) {
+        assert.instanceOf(error, Error);
+        done();
+      });
+  });
 });
