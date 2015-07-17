@@ -81,7 +81,9 @@ Each of Mailer instances has only one method
 
 ### send(config)
 
-`config` - Configuration object with mail options like `from`, `to`, etc... `config` will mix up to pre-defined config.
+`config` - Configuration object with mail options like `from`, `to`, etc...
+`config` will mix up to pre-defined config.
+All allowed options for this object you can find [here](http://www.nodemailer.com/#e-mail-message-fields).
 
 Returns Promise.
 
