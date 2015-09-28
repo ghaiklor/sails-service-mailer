@@ -48,7 +48,7 @@ describe('SendGridMailer', () => {
 
   it('Should properly throw exception on send', done => {
     let mailer = new SendGridMailer({provider: PROVIDER_CONFIG});
-    mailer.getProvider().provider = 'WRONG';
+    mailer.getProvider().transporter = 'WRONG';
 
     mailer
       .send()
