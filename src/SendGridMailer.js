@@ -1,35 +1,25 @@
-var util = require('util');
-var _ = require('lodash');
-var Promise = require('bluebird');
-var nodemailer = require('nodemailer');
-var sendGridTransport = require('nodemailer-sendgrid-transport');
-var BaseMailer = require('./BaseMailer');
+import _ from 'lodash';
+import nodemailer from 'nodemailer';
+import sendGridTransport from 'nodemailer-sendgrid-transport';
+import BaseMailer from './BaseMailer';
 
-util.inherits(SendGridMailer, BaseMailer);
+export default class SendGridMailer extends BaseMailer {
+  constructor(...args) {
+    super(...args);
 
-/**
- * Create instance for sending mail through SendGrid API
- * @constructor
- */
-function SendGridMailer() {
-  BaseMailer.apply(this, arguments);
+    this.setProvider(nodemailer.createTransport(sendGridTransport(this.get('provider'))));
+  }
 
-  this.setTransporter(nodemailer.createTransport(sendGridTransport(this.get('transporter'))));
-}
+  /**
+   * Send mail
+   * @param {Object} [_config] Additional configuration for overriding
+   * @returns {Promise}
+   */
+  send(_config) {
+    let config = _.omit(_.merge({}, this.get(), _config), 'provider');
 
-/**
- * Send mail via SendGrid API
- * @param {Object} [_config] Configuration object for overriding
- * @returns {Promise}
- */
-SendGridMailer.prototype.send = function (_config) {
-  var config = _.omit(_.merge({}, this.get(), _config), 'transporter');
-
-  return new Promise(function (resolve, reject) {
-    this.getTransporter().sendMail(config, function (error, result) {
-      return error ? reject(error) : resolve(result);
+    return new Promise((resolve, reject) => {
+      this.getProvider().sendMail(config, (error, result) => error ? reject(error) : resolve(result));
     });
-  }.bind(this));
-};
-
-module.exports = SendGridMailer;
+  }
+}
