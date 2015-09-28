@@ -1,0 +1,4 @@
+./test/**/*.test.js
+--require babelhook.js
+--reporter nyan
+--recursive
