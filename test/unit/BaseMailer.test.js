@@ -1,18 +1,13 @@
-var assert = require('chai').assert;
-var BaseMailer = require('../lib/BaseMailer');
+import { assert } from 'chai';
+import BaseMailer from '../../src/BaseMailer';
 
-describe('BaseMailer', function () {
-  it('Should properly export', function () {
+describe('BaseMailer', () => {
+  it('Should properly export', () => {
     assert.isFunction(BaseMailer);
-    assert.isFunction(BaseMailer.prototype.get);
-    assert.isFunction(BaseMailer.prototype.set);
-    assert.isFunction(BaseMailer.prototype.getTransporter);
-    assert.isFunction(BaseMailer.prototype.setTransporter);
-    assert.isFunction(BaseMailer.prototype.send);
   });
 
-  it('Should properly make objects configurable', function () {
-    var mailer = new BaseMailer();
+  it('Should properly make objects configurable', () => {
+    let mailer = new BaseMailer();
 
     assert.notOk(mailer.get('foo'));
     assert.instanceOf(mailer.set('foo', 'bar'), BaseMailer);
@@ -22,8 +17,8 @@ describe('BaseMailer', function () {
     assert.equal(mailer.get('foo'), 'bar');
   });
 
-  it('Should properly create mailer with pre-defined config', function () {
-    var mailer = new BaseMailer({
+  it('Should properly create mailer with pre-defined config', () => {
+    let mailer = new BaseMailer({
       foo: 'bar',
       obj: {
         foo: 'bar'
@@ -34,5 +29,13 @@ describe('BaseMailer', function () {
     assert.equal(mailer.get('obj.foo'), 'bar');
     assert.deepEqual(mailer.get('obj'), {foo: 'bar'});
     assert.notOk(mailer.get('NOT_EXISTS'));
+  });
+
+  it('Should properly get/set provider', () => {
+    let storage = new BaseMailer();
+
+    assert.deepEqual(storage.getProvider(), {});
+    assert.instanceOf(storage.setProvider('PROVIDER'), BaseMailer);
+    assert.equal(storage.getProvider(), 'PROVIDER');
   });
 });

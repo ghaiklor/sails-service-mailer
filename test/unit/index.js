@@ -1,39 +1,30 @@
-var assert = require('chai').assert;
-var MailerService = require('../../index');
-var DirectMailer = MailerService.DirectMailer;
-var SendGridMailer = MailerService.SendGridMailer;
-var SendMailMailer = MailerService.SendMailMailer;
-var SESMailer = MailerService.SESMailer;
-var SMTPMailer = MailerService.SMTPMailer;
-var StubMailer = MailerService.StubMailer;
+import { assert } from 'chai';
+import MailerService from '../../src/index';
+import DirectMailer from '../../src/DirectMailer';
+import SendGridMailer from '../../src/SendGridMailer';
+import SendMailMailer from '../../src/SendMailMailer';
+import SESMailer from '../../src/SESMailer';
+import SMTPMailer from '../../src/SMTPMailer';
+import StubMailer from '../../src/StubMailer';
 
-describe('MailerService', function () {
-  it('Should properly export', function () {
-    assert.isObject(MailerService);
-    assert.isFunction(MailerService.create);
-    assert.isFunction(MailerService.DirectMailer);
-    assert.isFunction(MailerService.SendGridMailer);
-    assert.isFunction(MailerService.SendMailMailer);
-    assert.isFunction(MailerService.SESMailer);
-    assert.isFunction(MailerService.SMTPMailer);
-    assert.isFunction(MailerService.StubMailer);
+describe('MailerService', () => {
+  it('Should properly export', () => {
+    assert.isFunction(MailerService);
   });
 
-  it('Should properly create all of mailer instances', function () {
-    assert.instanceOf(MailerService.create('direct'), DirectMailer);
-    assert.instanceOf(MailerService.create('sendgrid', {transporter: {auth: {}}}), SendGridMailer);
-    assert.instanceOf(MailerService.create('sendmail'), SendMailMailer);
-    assert.instanceOf(MailerService.create('ses'), SESMailer);
-    assert.instanceOf(MailerService.create('smtp'), SMTPMailer);
-    assert.instanceOf(MailerService.create('stub'), StubMailer);
+  it('Should properly create all of mailer instances', () => {
+    assert.instanceOf(MailerService('direct'), DirectMailer);
+    assert.instanceOf(MailerService('sendgrid', {transporter: {auth: {}}}), SendGridMailer);
+    assert.instanceOf(MailerService('sendmail'), SendMailMailer);
+    assert.instanceOf(MailerService('ses'), SESMailer);
+    assert.instanceOf(MailerService('smtp'), SMTPMailer);
+    assert.instanceOf(MailerService('stub'), StubMailer);
 
-    assert.throw(function () {
-      MailerService.create('NOT_EXISTS');
-    }, Error);
+    assert.throw(() => MailerService('NOT_EXISTS'), Error);
   });
 
-  it('Should properly send mail', function (done) {
-    var stubMailer = MailerService.create('stub', {
+  it('Should properly send mail', done => {
+    let stubMailer = MailerService.create('stub', {
       from: 'no-reply@ghaiklor.com'
     });
 
