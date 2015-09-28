@@ -1,30 +1,28 @@
-var mailers = {
-  direct: require('./DirectMailer'),
-  sendgrid: require('./SendGridMailer'),
-  sendmail: require('./SendMailMailer'),
-  ses: require('./SESMailer'),
-  smtp: require('./SMTPMailer'),
-  stub: require('./StubMailer')
+import DirectMailer from './DirectMailer';
+import SendGridMailer from './SendGridMailer';
+import SendMailMailer from './SendMailMailer';
+import SESMailer from './SESMailer';
+import SMTPMailer from './SMTPMailer';
+import StubMailer from './StubMailer';
+
+const mailer = {
+  direct: DirectMailer,
+  sendgrid: SendGridMailer,
+  sendmail: SendMailMailer,
+  ses: SESMailer,
+  smtp: SMTPMailer,
+  stub: StubMailer
 };
 
-module.exports = {
-  /**
-   * Create mailer instance based on type
-   * @param {String} type Type of mailer
-   * @param {Object} config Configuration object
-   */
-  create: function (type, config) {
-    if (mailers[type.toLowerCase()] instanceof Function) {
-      return new mailers[type.toLowerCase()](config);
-    } else {
-      throw new Error('Unrecognized type -> ' + type);
-    }
-  },
-
-  DirectMailer: mailers.direct,
-  SendGridMailer: mailers.sendgrid,
-  SendMailMailer: mailers.sendmail,
-  SESMailer: mailers.ses,
-  SMTPMailer: mailers.smtp,
-  StubMailer: mailers.stub
-};
+/**
+ * Create mailer instance based on type
+ * @param {String} type Type of mailer
+ * @param {Object} config Configuration object
+ */
+export default function (type, config) {
+  if (mailer[type.toLowerCase()] instanceof Function) {
+    return new mailer[type.toLowerCase()](config);
+  } else {
+    throw new Error('Unrecognized type -> ' + type);
+  }
+}
