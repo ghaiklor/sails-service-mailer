@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var MailerService = require('../');
+var MailerService = require('../../index');
 var DirectMailer = MailerService.DirectMailer;
 var SendGridMailer = MailerService.SendGridMailer;
 var SendMailMailer = MailerService.SendMailMailer;
