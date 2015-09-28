@@ -48,7 +48,7 @@ describe('StubMailer', () => {
   });
 
   it('Should properly throw exception on send', done => {
-    let mailer = new StubMailer({transporter: {error: new Error('Send is unsuccessful')}});
+    let mailer = new StubMailer({provider: {error: new Error('Send is unsuccessful')}});
 
     mailer
       .send()

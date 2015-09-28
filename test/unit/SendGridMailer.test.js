@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import sinon from 'sinon';
 import SendGridMailer from '../../src/SendGridMailer';
 
-const TRANSPORTER_CONFIG = {
+const PROVIDER_CONFIG = {
   auth: {
     api_user: 'test',
     api_key: 'test'
@@ -15,14 +15,14 @@ describe('SendGridMailer', () => {
   });
 
   it('Should properly instantiate', () => {
-    let mailer = new SendGridMailer({transporter: TRANSPORTER_CONFIG});
+    let mailer = new SendGridMailer({provider: PROVIDER_CONFIG});
     assert.instanceOf(mailer, SendGridMailer);
   });
 
   it('Should properly send mail', done => {
     let mailer = new SendGridMailer({
       from: 'no-reply@ghaiklor.com',
-      transporter: TRANSPORTER_CONFIG
+      provider: PROVIDER_CONFIG
     });
 
     sinon.stub(mailer.getProvider(), 'sendMail', (config, cb) => cb());
@@ -47,8 +47,8 @@ describe('SendGridMailer', () => {
   });
 
   it('Should properly throw exception on send', done => {
-    let mailer = new SendGridMailer({transporter: TRANSPORTER_CONFIG});
-    mailer.getProvider().transporter = 'WRONG';
+    let mailer = new SendGridMailer({provider: PROVIDER_CONFIG});
+    mailer.getProvider().provider = 'WRONG';
 
     mailer
       .send()

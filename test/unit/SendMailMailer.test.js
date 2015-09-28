@@ -17,7 +17,7 @@ describe('SendMailMailer', () => {
       from: 'no-reply@ghaiklor.com'
     });
 
-    sinon.stub(mailer.getProvider(), 'sendMail', config, cb => cb());
+    sinon.stub(mailer.getProvider(), 'sendMail', (config, cb) => cb());
 
     mailer
       .send({
