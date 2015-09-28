@@ -1,6 +1,13 @@
 # sails-service-mailer
 
-![Build Status](https://img.shields.io/travis/ghaiklor/sails-service-mailer.svg) ![Coverage](https://img.shields.io/coveralls/ghaiklor/sails-service-mailer.svg) ![Downloads](https://img.shields.io/npm/dm/sails-service-mailer.svg) ![npm version](https://img.shields.io/npm/v/sails-service-mailer.svg) ![dependencies](https://img.shields.io/david/ghaiklor/sails-service-mailer.svg) ![dev dependencies](https://img.shields.io/david/dev/ghaiklor/sails-service-mailer.svg) ![License](https://img.shields.io/npm/l/sails-service-mailer.svg)
+![Build Status](https://img.shields.io/travis/ghaiklor/sails-service-mailer.svg)
+![Coverage](https://img.shields.io/coveralls/ghaiklor/sails-service-mailer.svg)
+![Downloads](https://img.shields.io/npm/dm/sails-service-mailer.svg)
+![Downloads](https://img.shields.io/npm/dt/sails-service-mailer.svg)
+![npm version](https://img.shields.io/npm/v/sails-service-mailer.svg)
+![dependencies](https://img.shields.io/david/ghaiklor/sails-service-mailer.svg)
+![dev dependencies](https://img.shields.io/david/dev/ghaiklor/sails-service-mailer.svg)
+![License](https://img.shields.io/npm/l/sails-service-mailer.svg)
 
 Service for Sails framework with Mailer features.
 
@@ -21,50 +28,49 @@ Install this module.
 npm install sails-service-mailer
 ```
 
-Then require it in your service.
+Then require it in your service and create mailer instance.
 
 ```javascript
 // api/services/MailerService.js
-module.exports = require('sails-service-mailer');
-```
+import MailerService from 'sails-service-mailer';
 
-That's it, you can create instances of mailer for your needs in your project.
-
-```javascript
-// api/controllers/MailController.js
-var sendmail = MailerService.create('sendmail', {
+export default MailerService('sendmail', {
   from: 'no-reply@my-project.com',
   subject: 'Hello, there',
-  text: 'And of course, Hello World!'
+  provider: {
+    path: '/usr/bin/sendmail'
+  }
 });
 
-module.exports = {
+// api/controllers/MailController.js
+export default {
   send: function(req, res) {
-    sendmail
+    MailerService
       .send({
-        to: req.param('to')
+        to: req.param('to'),
+        text: 'And of course, Hello World!'
       })
       .then(res.ok)
-      .catch(res.serverError);
+      .catch(res.negotiate);
   }
 };
 ```
 
 ## Configuration
 
-There is two kind of configuration - transporter configuration and mail configuration.
+There is two kind of configuration - provider configuration and mail configuration.
 
-When you instantiate new instance of mailer, in configuration object you can add `transporter` object.
+When you instantiate new instance of mailer, in configuration object you can add `provider` object.
 This object will send directly to one of nodemailer transports.
 
-And all keys that don't belongs to `transporter` will send directly to `sendMail` function.
+And all keys that don't belongs to `provider` will send directly to `sendMail` function.
 
 So basic configuration can be:
 
 ```javascript
-var mailer = new DirectMailer({
+let mailer = MailerService('direct', {
   from: 'no-reply@some.com' // this will go to sendMail,
-  transporter: { // this will go to nodemailer.createTransport
+  provider: { // this will go to nodemailer.createTransport
     name: 'some.mx-server.com'
   }
 });
@@ -73,30 +79,29 @@ var mailer = new DirectMailer({
 Each of available options you can find in nodemailer transport repositories or a little bit below in examples.
 
 - Mail options you can find [here](http://www.nodemailer.com/#e-mail-message-fields).
-- Transport options you can find in appropriate repository of nodemailer transports.
+- Provider options you can find in appropriate repository of nodemailer transports.
 
 ## API
 
-Each of Mailer instances has only one method
+Each of Mailer instances has only one method:
 
 ### send(config)
 
-`config` - Configuration object with mail options like `from`, `to`, etc...
-`config` will mix up to pre-defined config.
+`config` - Configuration object with mail options like `from`, `to`, etc... It will mix up to the pre-defined config.
 All allowed options for this object you can find [here](http://www.nodemailer.com/#e-mail-message-fields).
 
 Returns Promise.
 
 ## Examples
 
-All of this examples contains all the transporter configuration keys. And most of them is optional.
+All of this examples contains all the provider configuration keys. And most of them is optional.
 
 ### DirectMailer
 
 ```javascript
-var direct = MailerService.create('direct', {
+let direct = MailerService('direct', {
   from: 'no-reply@ghaiklor.com',
-  transporter: {
+  provider: {
     name: '<MX_HOSTNAME>', // hostname to be used when introducing the client to the MX server
     debug: false // if true, the connection emits all traffic between client and server as `log` events
   }
@@ -106,9 +111,9 @@ var direct = MailerService.create('direct', {
 ### SendGridMailer
 
 ```javascript
-var sendGrid = MailerService.create('sendgrid', {
+let sendGrid = MailerService('sendgrid', {
   from: 'no-reply@ghaiklor.com',
-  transporter: {
+  provider: {
     auth: {
       api_user: '<SENDGRID_USERNAME>', // SendGrid username
       api_key: '<SENDGRID_PASSWORD>' // SendGrid password
@@ -120,9 +125,9 @@ var sendGrid = MailerService.create('sendgrid', {
 ### SendMailMailer
 
 ```javascript
-var sendmail = MailerService.create('sendmail', {
+let sendmail = MailerService('sendmail', {
   from: 'no-reply@ghaiklor.com',
-  transporter: {
+  provider: {
     path: '/usr/bin/sendmail', // path to the sendmail command
     args: [] // an array of extra command line options to pass to the `sendmail` command
   }
@@ -132,9 +137,9 @@ var sendmail = MailerService.create('sendmail', {
 ### SESMailer
 
 ```javascript
-var ses = MailerService.create('ses', {
+let ses = MailerService('ses', {
   from: 'no-reply@ghaiklor.com',
-  transporter: {
+  provider: {
     ses: {}, // instantiated AWS SES object with new AWS.SES()
     accessKeyId: 'MY_KEY', // AWS access key
     secretAccessKey: 'MY_SECRET', // AWS secret key
@@ -149,9 +154,9 @@ var ses = MailerService.create('ses', {
 ### SMTPMailer
 
 ```javascript
-var smtp = MailerService.create('smtp', {
+let smtp = MailerService('smtp', {
   from: 'no-reply@ghaiklor.com',
-  transporter: {
+  provider: {
     port: 25, // The port to connect to
     host: 'localhost', // The hostname to connect to
     secure: false, // Defines if the connection should use SSL
@@ -176,9 +181,9 @@ var smtp = MailerService.create('smtp', {
 ### StubMailer
 
 ```javascript
-var stub = MailerService.create('stub', {
+let stub = MailerService('stub', {
   from: 'no-reply@ghaiklor.com',
-  transporter: {
+  provider: {
     error: new Error('Invalid recipient') // If you want that sending will fail and return error
   }
 });
