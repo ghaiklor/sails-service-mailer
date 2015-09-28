@@ -1,35 +1,25 @@
-var util = require('util');
-var _ = require('lodash');
-var Promise = require('bluebird');
-var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
-var BaseMailer = require('./BaseMailer');
+import _ from 'lodash';
+import nodemailer from 'nodemailer';
+import smtpTransport from 'nodemailer-smtp-transport';
+import BaseMailer from './BaseMailer';
 
-util.inherits(SMTPMailer, BaseMailer);
+export default class SMTPMailer extends BaseMailer {
+  constructor(...args) {
+    super(...args);
 
-/**
- * Create new mailer instance for sending via SMTP servers
- * @constructor
- */
-function SMTPMailer() {
-  BaseMailer.apply(this, arguments);
+    this.setProvider(nodemailer.createTransport(smtpTransport(this.get('provider'))));
+  }
 
-  this.setTransporter(nodemailer.createTransport(smtpTransport(this.get('transporter'))));
-}
+  /**
+   * Send mail
+   * @param {Object} [_config] Additional configuration for overriding
+   * @returns {Promise}
+   */
+  send(_config) {
+    let config = _.omit(_.merge({}, this.get(), _config), 'provider');
 
-/**
- * Send message
- * @param {Object} _config Configuration object for overriding default config
- * @returns {Promise}
- */
-SMTPMailer.prototype.send = function (_config) {
-  var config = _.omit(_.merge({}, this.get(), _config), 'transporter');
-
-  return new Promise(function (resolve, reject) {
-    this.getTransporter().sendMail(config, function (error, result) {
-      return error ? reject(error) : resolve(result);
+    return new Promise((resolve, reject) => {
+      this.getProvider().sendMail(config, (error, result) => error ? reject(error) : resolve(result));
     });
-  }.bind(this));
-};
-
-module.exports = SMTPMailer;
+  }
+}
