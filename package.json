@@ -22,7 +22,6 @@
     "mailer"
   ],
   "dependencies": {
-    "bluebird": "2.10.1",
     "lodash": "3.10.1",
     "nodemailer": "1.5.0",
     "nodemailer-direct-transport": "1.0.2",
@@ -33,6 +32,7 @@
     "nodemailer-stub-transport": "1.0.0"
   },
   "devDependencies": {
+    "babel": "^5.8.23",
     "chai": "3.3.0",
     "istanbul": "0.3.21",
     "mocha": "2.3.3",
