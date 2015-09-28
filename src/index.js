@@ -17,7 +17,7 @@ const mailer = {
 /**
  * Create mailer instance based on type
  * @param {String} type Type of mailer
- * @param {Object} config Configuration object
+ * @param {Object} [config] Configuration object
  */
 export default function (type, config) {
   if (mailer[type.toLowerCase()] instanceof Function) {

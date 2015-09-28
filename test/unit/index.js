@@ -32,7 +32,7 @@ describe('MailerService', () => {
       .send({
         to: 'another@mail.com'
       })
-      .then(function (result) {
+      .then(result => {
         assert.equal(result.envelope.from, 'no-reply@ghaiklor.com');
         assert.equal(result.envelope.to, 'another@mail.com');
         done();
