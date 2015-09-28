@@ -3,7 +3,8 @@
 ## 3.0.0
 
 - Migration from ES5 to ES6 syntax;
-- Remove `.create` method. MailerService is a function itself now and you can call it `MailerService('smtp')`;
+- Remove `.create()` method. MailerService is a function itself now and you can call it `MailerService('smtp')`;
+- Rename `transporter` key in service configuration to `provider`;
 - Update dependencies and pin them;
 
 ## 2.0.1
