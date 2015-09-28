@@ -2,7 +2,7 @@
   "name": "sails-service-mailer",
   "version": "2.0.1",
   "description": "Service for Sails framework with Mailer feautres",
-  "main": "index.js",
+  "main": "lib/index.js",
   "author": "ghaiklor",
   "license": "MIT",
   "scripts": {
