@@ -1,35 +1,25 @@
-var util = require('util');
-var _ = require('lodash');
-var Promise = require('bluebird');
-var nodemailer = require('nodemailer');
-var sesTransport = require('nodemailer-ses-transport');
-var BaseMailer = require('./BaseMailer');
+import _ from 'lodash';
+import nodemailer from 'nodemailer';
+import sesTransport from 'nodemailer-ses-transport';
+import BaseMailer from './BaseMailer';
 
-util.inherits(SESMailer, BaseMailer);
+export default class SESMailer extends BaseMailer {
+  constructor(...args) {
+    super(...args);
 
-/**
- * Create new instance for sending mail via Amazon SES
- * @constructor
- */
-function SESMailer() {
-  BaseMailer.apply(this, arguments);
+    this.setProvider(nodemailer.createTransport(sesTransport(this.get('provider'))));
+  }
 
-  this.setTransporter(nodemailer.createTransport(sesTransport(this.get('transporter'))));
-}
+  /**
+   * Send mail
+   * @param {Object} [_config] Additional configuration for overriding
+   * @returns {Promise}
+   */
+  send(_config) {
+    let config = _.omit(_.merge({}, this.get(), _config), 'provider');
 
-/**
- * Send mail
- * @param {Object} _config Additional configuration
- * @returns {Promise}
- */
-SESMailer.prototype.send = function (_config) {
-  var config = _.omit(_.merge({}, this.get(), _config), 'transporter');
-
-  return new Promise(function (resolve, reject) {
-    this.getTransporter().sendMail(config, function (error, result) {
-      return error ? reject(error) : resolve(result);
+    return new Promise((resolve, reject) => {
+      this.getProvider().sendMail(config, (error, result) => error ? reject(error) : resolve(result));
     });
-  }.bind(this));
-};
-
-module.exports = SESMailer;
+  }
+}
