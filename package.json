@@ -1,6 +1,6 @@
 {
   "name": "sails-service-mailer",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Service for Sails framework with Mailer feautres",
   "main": "lib/index.js",
   "author": "ghaiklor",
@@ -34,7 +34,7 @@
     "nodemailer-stub-transport": "1.0.0"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
+    "babel": "5.8.23",
     "chai": "3.3.0",
     "istanbul": "0.3.21",
     "mocha": "2.3.3",
