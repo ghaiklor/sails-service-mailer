@@ -1,14 +1,15 @@
 {
   "name": "sails-service-mailer",
-  "version": "3.1.0",
   "description": "Service for Sails framework with Mailer feautres",
   "main": "lib/index.js",
   "author": "ghaiklor",
   "license": "MIT",
   "scripts": {
     "compile": "babel src --out-dir lib",
+    "coveralls": "cat coverage/lcov.info | coveralls",
     "prepublish": "npm run compile",
-    "test": "istanbul cover _mocha"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "test": "babel-node ./node_modules/.bin/isparta cover _mocha"
   },
   "bugs": {
     "url": "https://github.com/ghaiklor/sails-service-mailer/issues"
@@ -16,7 +17,7 @@
   "homepage": "https://github.com/ghaiklor/sails-service-mailer#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ghaiklor/sails-service-mailer.git"
+    "url": "https://github.com/ghaiklor/sails-service-mailer.git"
   },
   "keywords": [
     "sails",
@@ -34,10 +35,24 @@
     "nodemailer-stub-transport": "1.0.0"
   },
   "devDependencies": {
-    "babel": "6.0.14",
+    "babel": "5.8.29",
     "chai": "3.4.0",
-    "istanbul": "0.4.0",
+    "coveralls": "2.11.4",
+    "cz-conventional-changelog": "1.1.4",
+    "isparta": "3.5.0",
     "mocha": "2.3.3",
+    "semantic-release": "4.3.5",
     "sinon": "1.17.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "publishConfig": {
+    "tag": "latest"
+  },
+  "release": {
+    "branch": "master"
   }
 }
