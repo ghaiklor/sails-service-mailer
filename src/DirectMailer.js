@@ -4,8 +4,8 @@ import directTransport from 'nodemailer-direct-transport';
 import BaseMailer from './BaseMailer';
 
 export default class DirectMailer extends BaseMailer {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(nodemailer.createTransport(directTransport(this.get('provider'))));
   }

@@ -4,8 +4,8 @@ import sendmailTransport from 'nodemailer-sendmail-transport';
 import BaseMailer from './BaseMailer';
 
 export default class SendMailMailer extends BaseMailer {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(nodemailer.createTransport(sendmailTransport(this.get('provider'))));
   }

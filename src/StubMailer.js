@@ -4,8 +4,8 @@ import stubTransport from 'nodemailer-stub-transport';
 import BaseMailer from './BaseMailer';
 
 export default class StubMailer extends BaseMailer {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(nodemailer.createTransport(stubTransport(this.get('provider'))));
   }

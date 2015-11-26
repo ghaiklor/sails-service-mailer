@@ -4,8 +4,8 @@ import sesTransport from 'nodemailer-ses-transport';
 import BaseMailer from './BaseMailer';
 
 export default class SESMailer extends BaseMailer {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(nodemailer.createTransport(sesTransport(this.get('provider'))));
   }

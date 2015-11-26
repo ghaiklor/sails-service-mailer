@@ -4,8 +4,8 @@ import sendGridTransport from 'nodemailer-sendgrid-transport';
 import BaseMailer from './BaseMailer';
 
 export default class SendGridMailer extends BaseMailer {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(nodemailer.createTransport(sendGridTransport(this.get('provider'))));
   }
