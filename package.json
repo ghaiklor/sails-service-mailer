@@ -33,7 +33,7 @@
     "nodemailer-sendmail-transport": "1.0.0",
     "nodemailer-ses-transport": "1.4.0",
     "nodemailer-smtp-transport": "2.6.0",
-    "nodemailer-stub-transport": "1.0.0"
+    "nodemailer-stub-transport": "1.1.0"
   },
   "devDependencies": {
     "babel-cli": "6.10.1",
