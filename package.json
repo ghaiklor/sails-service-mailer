@@ -32,7 +32,7 @@
     "nodemailer-sendgrid-transport": "0.2.0",
     "nodemailer-sendmail-transport": "1.0.0",
     "nodemailer-ses-transport": "1.4.0",
-    "nodemailer-smtp-transport": "2.6.0",
+    "nodemailer-smtp-transport": "2.7.1",
     "nodemailer-stub-transport": "1.1.0"
   },
   "devDependencies": {
