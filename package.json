@@ -26,7 +26,7 @@
     "mailer"
   ],
   "dependencies": {
-    "lodash": "4.16.5",
+    "lodash": "4.16.6",
     "nodemailer": "2.6.4",
     "nodemailer-direct-transport": "3.3.2",
     "nodemailer-sendgrid-transport": "0.2.0",
