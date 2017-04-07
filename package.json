@@ -31,7 +31,7 @@
     "nodemailer-direct-transport": "3.3.2",
     "nodemailer-sendgrid-transport": "0.2.0",
     "nodemailer-sendmail-transport": "1.0.0",
-    "nodemailer-ses-transport": "1.5.0",
+    "nodemailer-ses-transport": "1.5.1",
     "nodemailer-smtp-transport": "2.7.2",
     "nodemailer-stub-transport": "1.1.0"
   },
