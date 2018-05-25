@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "lodash": "4.17.9",
-    "nodemailer": "4.6.4",
+    "nodemailer": "4.6.5",
     "nodemailer-direct-transport": "3.3.2",
     "nodemailer-sendgrid-transport": "0.2.0",
     "nodemailer-sendmail-transport": "1.0.1",
@@ -44,8 +44,8 @@
     "cz-conventional-changelog": "2.1.0",
     "isparta": "4.0.0",
     "mocha": "5.2.0",
-    "semantic-release": "15.1.8",
-    "sinon": "5.0.1"
+    "semantic-release": "15.4.2",
+    "sinon": "5.0.8"
   },
   "config": {
     "commitizen": {
