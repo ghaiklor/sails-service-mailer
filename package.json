@@ -45,7 +45,7 @@
     "isparta": "4.1.1",
     "mocha": "6.1.0",
     "semantic-release": "15.13.3",
-    "sinon": "7.3.0"
+    "sinon": "7.3.2"
   },
   "config": {
     "commitizen": {
