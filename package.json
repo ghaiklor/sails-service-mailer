@@ -44,7 +44,7 @@
     "cz-conventional-changelog": "3.0.0",
     "isparta": "4.1.1",
     "mocha": "6.2.0",
-    "semantic-release": "15.13.16",
+    "semantic-release": "15.13.21",
     "sinon": "7.4.0"
   },
   "config": {
